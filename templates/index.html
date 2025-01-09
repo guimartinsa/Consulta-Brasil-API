@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Consulta</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    <style ></style>
+</head>
+<body>
+    <h1>Bem-vindo ao Sistema de Consulta</h1>
+    <h2>Consultar CEP</h2>
+    <form id="cep-form">
+        <label for="cep">Digite o CEP:</label>
+        <input type="text" id="cep" name="cep" required>
+        <button type="submit">Consultar</button>
+    </form>
+    <div id="cep-resultado"></div>
+    <h2>Consultar CNPJ</h2>
+    <form id="cnpj-form">
+        <label for="cnpj">Digite o CNPJ:</label>
+        <input type="text" id="cnpj" name="cnpj" required>
+        <button type="submit">Consultar</button>
+    </form>
+    <div id="cnpj-resultado"></div>
+    <h2>Consultar Feriados Nacionais</h2>
+    <form id="feriado-form">
+        <label for="ano">Digite o Ano:</label>
+        <input type="number" id="ano" name="ano" required>
+        <button type="submit">Consultar</button>
+    </form>
+    <div id="feriado-resultado"></div>
+    <script>
+        // Consulta CEP
+        $("#cep-form").on("submit", function(event) {
+            event.preventDefault();
+            const cep = $("#cep").val();
+            $.post("/consulta/cep", { cep: cep }, function(data) {
+                $("#cep-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            });
+        });
+        // Consulta CNPJ
+        $("#cnpj-form").on("submit", function(event) {
+            event.preventDefault();
+            const cnpj = $("#cnpj").val();
+            $.post("/consulta/cnpj", { cnpj: cnpj }, function(data) {
+                $("#cnpj-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            });
+        });
+        // Consulta Feriados
+        $("#feriado-form").on("submit", function(event) {
+            event.preventDefault();
+            const ano = $("#ano").val();
+            $.post("/consulta/feriados", { ano: ano }, function(data) {
+                $("#feriado-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            });
+        });
+    </script>
+</body>
+</html>
