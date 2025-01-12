@@ -5,55 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Consulta</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="script.js"></script>
-    <style ></style>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Bem-vindo ao Sistema de Consulta</h1>
-    <h2>Consultar CEP</h2>
-    <form id="cep-form">
-        <label for="cep">Digite o CEP:</label>
-        <input type="text" id="cep" name="cep" required>
-        <button type="submit">Consultar</button>
-    </form>
-    <div id="cep-resultado"></div>
-    <h2>Consultar CNPJ</h2>
-    <form id="cnpj-form">
-        <label for="cnpj">Digite o CNPJ:</label>
-        <input type="text" id="cnpj" name="cnpj" required>
-        <button type="submit">Consultar</button>
-    </form>
-    <div id="cnpj-resultado"></div>
-    <h2>Consultar Feriados Nacionais</h2>
-    <form id="feriado-form">
-        <label for="ano">Digite o Ano:</label>
-        <input type="number" id="ano" name="ano" required>
-        <button type="submit">Consultar</button>
-    </form>
-    <div id="feriado-resultado"></div>
+    <div id="container">
+        <h1>Bem-vindo ao Sistema de Consulta</h1>
+    
+        <!-- Seletor de Tipo de Consulta -->
+        <div id="conteudo">
+            <h2>Escolha o Tipo de Consulta</h2>
+            <select id="consulta-tipo">
+                <option value="cep">Consulta CEP</option>
+                <option value="bank">Consulta de banco por código</option>
+                <option value="cnpj">Consulta CNPJ</option>
+                <option value="feriados">Consulta de Feriados Nacionais</option>
+                <option value="dominio">Consulta de Domínio</option>
+                <option value="ddd">Consulta de DDD</option>
+            </select>
+            
+            <!-- Formulário de Consulta -->
+            <div id="consulta-form-container">
+                <!-- Formulário de CEP -->
+                <form id="cep-form" class="consulta-form">
+                    <label for="cep">Digite o CEP:</label>
+                    <input type="text" id="cep" name="cep" required>
+                    <button type="submit">Consultar</button>
+                </form>
+
+                <!-- Formulário de CNPJ -->
+                <form id="cnpj-form" class="consulta-form" style="display: none;">
+                    <label for="cnpj">Digite o CNPJ:</label>
+                    <input type="text" id="cnpj" name="cnpj" required>
+                    <button type="submit">Consultar</button>
+                </form>
+
+                <!-- Formulário de Feriados -->
+                <form id="feriado-form" class="consulta-form" style="display: none;">
+                    <label for="ano">Digite o Ano:</label>
+                    <input type="number" id="ano" name="ano" required>
+                    <button type="submit">Consultar</button>
+                </form>
+
+                <!-- Formulário de Domínio -->
+                <form id="dominio-form" class="consulta-form" style="display: none;">
+                    <label for="dominio">Digite o domínio:</label>
+                    <input type="text" id="dominio" name="dominio" required>
+                    <button type="submit">Consultar</button>
+                </form>
+
+                <!-- Formulário de Banco -->
+                <form id="bank-form" class="consulta-form" style="display: none;">
+                    <label for="codigo">Digite o código do banco:</label>
+                    <input type="text" id="codigo" name="codigo" required>
+                    <button type="submit">Consultar</button>
+                </form>
+
+                <!-- Formulário de DDD -->
+                <form id="ddd-form" class="consulta-form" style="display: none;">
+                    <label for="ddd">Digite o DDD:</label>
+                    <input type="text" id="ddd" name="ddd" required>
+                    <button type="submit">Consultar</button>
+            </div>
+
+            <!-- Resultado -->
+            <div id="consulta-resultado">
+                <p>O resultado será exibido aqui.</p>
+            </div>
+        </div>
+    </div>
+    
     <script>
+        // Mostrar o formulário correspondente à opção selecionada
+        $("#consulta-tipo").on("change", function() {
+            const tipo = $(this).val();
+            $(".consulta-form").hide(); // Esconde todos os formulários
+            if (tipo === "cep") {
+                $("#cep-form").show();
+            } else if (tipo === "cnpj") {
+                $("#cnpj-form").show();
+            } else if (tipo === "feriados") {
+                $("#feriado-form").show();
+            } else if (tipo === "dominio") {
+                $("#dominio-form").show();
+            } else if (tipo === "bank") {
+                $("#bank-form").show();
+            } else if (tipo === "ddd") {
+                $("#ddd-form").show();
+            }
+        });
+
         // Consulta CEP
         $("#cep-form").on("submit", function(event) {
             event.preventDefault();
             const cep = $("#cep").val();
             $.post("/consulta/cep", { cep: cep }, function(data) {
-                $("#cep-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta do CEP.</p>");
             });
         });
+
         // Consulta CNPJ
         $("#cnpj-form").on("submit", function(event) {
             event.preventDefault();
             const cnpj = $("#cnpj").val();
             $.post("/consulta/cnpj", { cnpj: cnpj }, function(data) {
-                $("#cnpj-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta do CNPJ.</p>");
             });
         });
+
         // Consulta Feriados
         $("#feriado-form").on("submit", function(event) {
             event.preventDefault();
             const ano = $("#ano").val();
             $.post("/consulta/feriados", { ano: ano }, function(data) {
-                $("#feriado-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta de feriados.</p>");
+            });
+        });
+
+        // Consulta Domínio
+        $("#dominio-form").on("submit", function(event) {
+            event.preventDefault();
+            const dominio = $("#dominio").val();
+            $.post("/consulta/dominio", { dominio: dominio }, function(data) {
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta do domínio.</p>");
+            });
+        });
+
+        // Consulta Banco
+        $("#bank-form").on("submit", function(event) {
+            event.preventDefault();
+            const codigo = $("#codigo").val();
+            $.post("/consulta/banco", { codigo: codigo }, function(data) {
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta do banco.</p>");
+            });
+        });
+
+        // Consulta DDD 
+        $("#ddd-form").on("submit", function(event) {
+            event.preventDefault();
+            const ddd = $("#ddd").val();
+            $.post("/consulta/ddd", { ddd: ddd }, function(data) {
+                $("#consulta-resultado").html(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+            }).fail(function() {
+                $("#consulta-resultado").html("<p>Não foi possível realizar a consulta do DDD.</p>");
             });
         });
     </script>

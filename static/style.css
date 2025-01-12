@@ -1,0 +1,76 @@
+/* Estilo global usando o seletor universal */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  #container {
+      width: 90%; /* Reduz a largura em dispositivos menores */
+      padding: 15px;
+  }
+
+  #container h1 {
+      font-size: 1.5rem; /* Reduz o tamanho da fonte */
+  }
+}
+
+
+body{    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7px;
+  background-image: linear-gradient(to right,#472758,#37274B,#2D243F,#212030,#191820,#1A121D,#1E101D,#260F21,#34102C,#3F1239,#461542,#521B52,#5A2666,#5F3479,#5E397F);
+}
+
+#container {
+  height: auto; /* Ajusta altura conforme o conteúdo */
+  max-width: 600px; /* Limita a largura máxima */
+  width: 100%; /* Garante responsividade */
+  padding: 20px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 15px; /* Suaviza as bordas */
+  background-color: #5F3479;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao container */
+}
+
+
+#container h1 {
+  display: inline-flex;
+  justify-content: center;
+  margin: 7px 0; /* Combina margin-top e margin-bottom */
+  padding: 7px; /* Define padding uniforme */
+}
+
+
+#container #conteudo{
+  display: block;
+}
+
+#consulta-resultado {
+  color: rgb(141, 51, 51);
+  border: 1px solid rgb(253, 253, 253);
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+  padding: 10px; /* Espaçamento interno */
+  margin-top: 10px; /* Espaçamento entre o resultado e o formulário */
+  background-color: #ffe6e6; /* Fundo mais claro para destacar o texto */
+}
+
+button {
+  background-color: #b57ecf;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: rgb(0, 153, 220);
+}
+
