@@ -121,4 +121,4 @@ def consulta_ddd():
     return jsonify(resultado)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
