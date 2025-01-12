@@ -1,0 +1,38 @@
+# Arquivos e diretórios Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Configurações do Editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.pid
+*.swp
+*.swo
+
+# Configurações do Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Dependências instaladas
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Arquivos de configuração do Vercel (locais ou sensíveis)
+.vercel/
+.env
+.env.local
+.env.*.local
