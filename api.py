@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # Função para consultar Bancos
 def consultar_banco(code):
